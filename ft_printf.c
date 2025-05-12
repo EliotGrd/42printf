@@ -24,13 +24,13 @@ int	check_cases(char specifier, va_list args)
 	else if (specifier == 'p')
 			count += ft_putaddress(va_arg(args, void *));
 	else if (specifier == 'd' || specifier == 'i')
-			count += ft_putnbr_base(va_arg(args, int), "0123456789");
+			count += ft_putnbr(va_arg(args, int));
 	else if (specifier == 'u')
-			count += ft_putnbr_unsigned(va_arg(args, unsigned int));
+			count += ft_putunsigned_base(va_arg(args, unsigned int), "0123456789");
 	else if (specifier == 'x')
-			count += ft_putnbr_base(va_arg(args, int), "0123456789abcdef");
+			count += ft_putunsigned_base(va_arg(args, int), "0123456789abcdef");
 	else if (specifier == 'X')
-			count += ft_putnbr_base(va_arg(args, int), "0123456789ABCDEF");
+			count += ft_putunsigned_base(va_arg(args, int), "0123456789ABCDEF");
 	return (count);
 }
 
@@ -41,7 +41,7 @@ int	ft_printf(const char *str, ...)
 	int count;
 	int i;
 
-	va_start(args, str)
+	va_start(args, str);
 	i = 0;
 	count = 0;
 	while (str[i])

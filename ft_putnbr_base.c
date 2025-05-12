@@ -12,68 +12,44 @@
 
 #include "ft_printf.h"
 
-static int	count_digits(int nb, int baselen)
+int	ft_putunsigned_base(unsigned int nb, char *base)
 {
 	int	count;
+	unsigned int	baselen;
 
-	count = 0;
-	if (nb < 0)
-	{
-		nb = -nb;
-		count++;
-	}
-	if (nb < baselen)
-		return (count + 1);
-	while (nb)
-	{
-		nb /= baselen;
-		count++;
-	}
-	return (count)
-}
-
-int	ft_putnbr_unsigned(unsigned int nb)
-{
-	int	baselen;
-	unsigned int nblen;
-
-	nblen = count_digits(nb, baselen);
 	baselen = ft_strlen(base);
+	count = 0;
 	if (nb <= baselen)
-	{
-		ft_putchar_c(base[nb]);
-	}
+		count += ft_putchar_c(nb);
 	else
 	{
-		ft_putnbr_unsigned(nb / baselen, base);
-		ft_putnbr_unsigned(nb % baselen, base);
+		ft_putunsigned_base(nb / baselen, base);
+		ft_putunsigned_base(nb % baselen, base);
 	}
-
+	return (count);
 }
 
-int	ft_putnbr_base(int nb, char *base)
+int	ft_putnbr(int nb)
 {
 	long nbr;
-	unsigned int nblen;
-	int	baselen;
+	int count;
 
+	count = 0;
 	nbr = nb;
-	baselen = ft_strlen(base);
-	nblen = count_digits(nb, baselen);
 	if (nbr < 0)
 	{
-		ft_putchar_c('-');
+		count += ft_putchar_c('-');
 		nbr = -nbr;
 	}
-	if (nbr <= baselen)
+	if (nbr <= 10)
 	{
-		ft_putchar_c(base[nbr]);
+		count += ft_putchar_c(nbr);
 	}
 	else 
 	{
-		ft_putnbr_base(nbr / baselen, base);
-		ft_putnbr_base(nbr % baselen, base);
+		ft_putnbr(nbr / 10);
+		ft_putnbr(nbr % 10);
 	}
-	return (nblen)
+	return (count);
 }
 

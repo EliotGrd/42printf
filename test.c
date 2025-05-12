@@ -1,8 +1,13 @@
 #include <stdio.h>
+#include "ft_printf.h"
 
 int main()
 {
-	printf("lol%ylol\n");
-	printf("lol%%lol\n");
-	printf("lol%hlol\n");
+	printf("lol%dlol\n", 10);
+	printf("lol%dlol\n", 10);
+	printf("lol%slol\n", "lol");
+	
+	ft_printf("lol%xlol\n", 16);
+	ft_printf("lol%slol\n", "lol");
+	ft_printf("lol%xlol\n", 16);
 }

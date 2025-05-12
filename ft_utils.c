@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_printf.h"
+
 int	ft_strlen(char *str)
 {
 	int i;
@@ -20,13 +22,11 @@ int	ft_strlen(char *str)
 	return (i);
 }
 
-//ft_puchar_c
-int	ft_putchar_c(char c)
+int	ft_putchar_c(int c)
 {
-	return(write(1,&c,1));
+	return(write(1, &c, 1));
 }
 
-//ft_putstr_c
 int	ft_putstr_c(char *str)
 {
 	int count;
@@ -40,8 +40,35 @@ int	ft_putstr_c(char *str)
 	return (count);
 }
 
-//ft_putaddress
-int	ft_putaddress(unsigned long long ptr)
+static int	get_hexa(unsigned long long nb)
 {
+	int	count;
+	char *base;
 
+	base = "0123456789abcdef";
+	count = 0;
+	if (nb <= 16)
+	{
+		count += ft_putchar_c(base[nb]);
+	}
+	else
+	{
+		count += get_hexa(nb / 16);
+		count += get_hexa(nb % 16);
+	}
+	return(count);
+}
+
+int	ft_putaddress(void *ptr)
+{
+	int count;
+	unsigned long long nb;
+
+	nb = (unsigned long long)ptr;
+	count = 0;
+	if (!ptr)
+		return (write(1,"(nil)",5));
+	count += write(1,"Ox",2);
+	count += get_hexa(nb);
+	return (count);
 }

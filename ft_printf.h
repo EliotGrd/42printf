@@ -11,14 +11,14 @@
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
-# define FT_PRINT_F
+# define FT_PRINTF_H
 
 #include <unistd.h>
 #include <stdarg.h>
 
-int		ft_printf(const char *format);
-int		ft_putnbr_unsigned(unsigned int nb, char *base);
-int		ft_putnbr_base(int nb, char *base);
+int		ft_printf(const char *format, ...);
+int		ft_putnbr(int nb);
+int		ft_putunsigned_base(unsigned int nb, char *base);
 int		ft_putchar_c(int n);
 int		ft_putstr_c(char *);
 int 	ft_putaddress(void *);

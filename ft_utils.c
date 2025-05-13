@@ -14,7 +14,7 @@
 
 int	ft_strlen(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -24,14 +24,16 @@ int	ft_strlen(char *str)
 
 int	ft_putchar_c(int c)
 {
-	return(write(1, &c, 1));
+	return (write(1, &c, 1));
 }
 
 int	ft_putstr_c(char *str)
 {
-	int count;
+	int	count;
 
 	count = 0;
+	if (!str)
+		return (write(1, "(null)", 6));
 	while (*str)
 	{
 		count += ft_putchar_c(*str);
@@ -40,35 +42,35 @@ int	ft_putstr_c(char *str)
 	return (count);
 }
 
-static int	get_hexa(unsigned long long nb)
+static int	get_hexa(unsigned long nb)
 {
-	int	count;
-	char *base;
+	int		count;
+	char	*base;
 
 	base = "0123456789abcdef";
 	count = 0;
-	if (nb <= 16)
+	if (nb < 16)
 	{
 		count += ft_putchar_c(base[nb]);
 	}
-	else
+	if (nb >= 16)
 	{
 		count += get_hexa(nb / 16);
 		count += get_hexa(nb % 16);
 	}
-	return(count);
+	return (count);
 }
 
 int	ft_putaddress(void *ptr)
 {
-	int count;
-	unsigned long long nb;
+	int				count;
+	unsigned long	nb;
 
-	nb = (unsigned long long)ptr;
+	nb = (unsigned long)ptr;
 	count = 0;
 	if (!ptr)
-		return (write(1,"(nil)",5));
-	count += write(1,"Ox",2);
+		return (write(1, "(nil)", 5));
+	count += write(1, "0x", 2);
 	count += get_hexa(nb);
 	return (count);
 }

@@ -12,9 +12,9 @@
 
 #include "ft_printf.h"
 
-int	check_cases(char specifier, va_list args)
+static int	check_cases(char specifier, va_list args)
 {
-	int count;
+	int	count;
 
 	count = 0;
 	if (specifier == 'c')
@@ -26,38 +26,39 @@ int	check_cases(char specifier, va_list args)
 	else if (specifier == 'd' || specifier == 'i')
 			count += ft_putnbr(va_arg(args, int));
 	else if (specifier == 'u')
-			count += ft_putunsigned_base(va_arg(args, unsigned int), "0123456789");
+			count += ft_putunsigned_base(va_arg(args, unsigned int), \
+								"0123456789");
 	else if (specifier == 'x')
-			count += ft_putunsigned_base(va_arg(args, int), "0123456789abcdef");
+			count += ft_putunsigned_base(va_arg(args, unsigned int), \
+								"0123456789abcdef");
 	else if (specifier == 'X')
-			count += ft_putunsigned_base(va_arg(args, int), "0123456789ABCDEF");
+			count += ft_putunsigned_base(va_arg(args, unsigned int), \
+								"0123456789ABCDEF");
 	return (count);
 }
 
-
 int	ft_printf(const char *str, ...)
 {
-	va_list args;
-	int count;
-	int i;
+	va_list	args;
+	int		count;
+	int		i;
 
+	if (!str)
+		return (-1);
 	va_start(args, str);
 	i = 0;
 	count = 0;
 	while (str[i])
 	{
 		if (str[i] != '%')
-		{
-			count += ft_putchar_c(str[i]);
-			i++;
-		}
+			count += ft_putchar_c(str[i++]);
 		else
 		{
 			if (str[i + 1] == '%')
 				count += ft_putchar_c('%');
 			else
 				count += check_cases(str[i + 1], args);
-			i++;
+			i += 2;
 		}
 	}
 	va_end(args);
